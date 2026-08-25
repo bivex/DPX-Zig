@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dpx-zig"
+version = "0.1.0"
+description = "⭐ Type-Safe Zig Static Analyzer: Comptime Metaprogramming, Explicit Allocator Passing, Defer RAII, Error Unions, Tagged Unions, SIMD Vectorization, GoF 23 & Memory Safety Hazards."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Bivex Team", email = "dev@bivex.io" }
+]
+keywords = ["zig", "static-analysis", "architecture", "design-patterns", "gof", "comptime", "allocator", "simd", "sarif", "memory-safety"]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+]
+
+[project.scripts]
+dpx-zig = "pattern_detector.adapters.inbound.cli.main:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pattern_detector"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --cov=src/pattern_detector --cov-report=term-missing"
